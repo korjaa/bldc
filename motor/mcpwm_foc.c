@@ -2648,10 +2648,10 @@ void mcpwm_foc_adc_int_handler(void *p, uint32_t flags) {
 	motor_now->m_curr_unbalance = curr0 + curr1 + curr2;
 #endif
 
-	ADC_curr_norm_value[0 + norm_curr_ofs] = curr0;
-	ADC_curr_norm_value[1 + norm_curr_ofs] = curr1;
+	ADC_curr_norm_value[0 + norm_curr_ofs] = curr0 - motor_now->m_curr_unbalance / 3;
+	ADC_curr_norm_value[1 + norm_curr_ofs] = curr1 - motor_now->m_curr_unbalance / 3;
 #ifdef HW_HAS_3_SHUNTS
-	ADC_curr_norm_value[2 + norm_curr_ofs] = curr2;
+	ADC_curr_norm_value[2 + norm_curr_ofs] = curr2 - motor_now->m_curr_unbalance / 3;
 #else
 	ADC_curr_norm_value[2 + norm_curr_ofs] = -(ADC_curr_norm_value[0] + ADC_curr_norm_value[1]);
 #endif
